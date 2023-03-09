@@ -1,0 +1,13 @@
+{
+    "database": {
+        "user": "root",
+        "password": "fsdewc32sdca32",
+        "db_port": 5432,
+        "db_host": "pgsql",
+        "db_name": "drimo"
+    },
+    "head": {
+        "app_http_port": 4321,
+        "app_http_host": "localhost"
+    }
+}
