@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  pgsql:
+    image: postgres:14.5
+    command:
+      - "postgres"
+      - "-c"
+      - "idle_in_transaction_session_timeout=10000"
+      - "-c"
+      - "logging_collector=on"
+    hostname: pgsql
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_PASSWORD=fsdewc32sdca32"
+      - "POSTGRES_USER=root"
+      - "POSTGRES_DB=rightech"
+      - "TZ=GMT+3"
+    volumes:
+      - ./persistent_volume:/var/lib/postgresql/data/
+      - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d rightech"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 70G

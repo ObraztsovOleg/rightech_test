@@ -5,7 +5,9 @@ import express, {Express, NextFunction, Request, Response, Router} from 'express
 import CORS from './CORS'
 import {logger} from './Logger'
 import Api from './api/api'
+import pool from './model/pgbase'
 
+pool()
 
 const app: Express = express()
 const HTTP_PORT: number = config.get('head.app_http_port') || 4321
