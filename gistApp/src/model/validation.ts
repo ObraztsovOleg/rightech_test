@@ -1,51 +1,46 @@
-import {Response, Request, NextFunction} from 'express'
+import {NextFunction, Request, Response} from 'express'
+
 import {logger} from '../Logger'
 
 function validatePolygon(req: Request, res: Response, next: NextFunction) {
-    const regex: RegExp = /^\([(\d,\d)]*\)$/gm
-    if (!regex.test(req.body.poly)) {
-        logger.warn("Unexpected polygon in vlidation model")
-        return res.status(400).json({
-            status: false,
-            message: "Unexpected polygon",
-            code: 400,
-            data: {}
-        })
-    }
+  const regex: RegExp = /^\([(\d,\d)]*\)$/gm
+  if (!regex.test(req.body.poly)) {
+    if (process.env.LOGGER)
+      logger.warn('Unexpected polygon in vlidation model')
+      return res.status(400).json(
+          {status: false, message: 'Unexpected polygon', code: 400, data: {}})
+  }
 
-    next()
+  next()
 }
 
 function validateHash(req: Request, res: Response, next: NextFunction) {
-    const regex: RegExp = /^[a-f0-9]{40}$/
+  const regex: RegExp = /^[a-f0-9]{40}$/
 
-    if (!regex.test(req.params?.hash)) {
-        logger.warn("Unexpected hash in vlidation model")
-        return res.status(400).json({
-            status: false,
-            message: "Unexpected hash",
-            code: 400,
-            data: {}
-        })
-    }
+  if (!regex.test(req.params?.hash)) {
+    if (process.env.LOGGER)
+      logger.warn('Unexpected hash in vlidation model')
+      return res.status(400).json(
+          {status: false, message: 'Unexpected hash', code: 400, data: {}})
+  }
 
-    next()
+  next()
 }
 
 function validatePoint(req: Request, res: Response, next: NextFunction) {
-    const regex: RegExp = /^\d$/
+  const regex: RegExp = /^\d$/
 
-    if (!regex.test(req.body.pos.x) || !regex.test(req.body.pos.y)) {
-        logger.warn("Unexpected position pointed")
-        return res.status(400).json({
-            status: false,
-            message: "Unexpected position pointed",
-            code: 400,
-            data: {}
-        })
-    }
+  if (!regex.test(req.body.pos.x) || !regex.test(req.body.pos.y)) {
+    if (process.env.LOGGER) logger.warn('Unexpected position pointed')
+      return res.status(400).json({
+        status: false,
+        message: 'Unexpected position pointed',
+        code: 400,
+        data: {}
+      })
+  }
 
-    next()
+  next()
 }
 
 export {validatePolygon, validateHash, validatePoint}

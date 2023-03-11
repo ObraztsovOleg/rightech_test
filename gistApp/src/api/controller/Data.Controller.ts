@@ -21,14 +21,15 @@ class DataController {
         data: {'is_in_poly': rows[0].is_in_poly}
       });
     } catch (error: any) {
-      logger.error(`Unexpected error in get data: ${error}`)
+      if (process.env.LOGGER)
+        logger.error(`Unexpected error in get data: ${error}`)
 
-      return res.status(500).json({
-        status: false,
-        message: 'Unexpected error in get data',
-        data: {},
-        code: 500
-      });
+        return res.status(500).json({
+          status: false,
+          message: 'Unexpected error in get data',
+          data: {},
+          code: 500
+        })
     }
   }
 
@@ -46,19 +47,20 @@ class DataController {
         color = $2,
         poly = $3
         WHERE hash = $4`,
-          [name, color, poly, hash]);
+          [name, color, poly, hash])
 
       return res.status(200).json(
-          {status: true, message: 'Success', code: 200, data: {}});
+          {status: true, message: 'Success', code: 200, data: {}})
     } catch (error: any) {
-      logger.error(`Unexpected error in update data: ${error}`)
+      if (process.env.LOGGER)
+        logger.error(`Unexpected error in update data: ${error}`)
 
-      return res.status(500).json({
-        status: false,
-        message: 'Unexpected error in get data',
-        data: {},
-        code: 500
-      });
+        return res.status(500).json({
+          status: false,
+          message: 'Unexpected error in get data',
+          data: {},
+          code: 500
+        })
     }
   }
 
@@ -82,14 +84,15 @@ class DataController {
         data: {hash: rows[0]?.hash}
       });
     } catch (error: any) {
-      logger.error(`Unexpected error in add data: ${error}`)
+      if (process.env.LOGGER)
+        logger.error(`Unexpected error in add data: ${error}`)
 
-      return res.status(500).json({
-        status: false,
-        message: 'Unexpected error in add data',
-        data: {},
-        code: 500
-      });
+        return res.status(500).json({
+          status: false,
+          message: 'Unexpected error in add data',
+          data: {},
+          code: 500
+        })
     }
   }
 
@@ -98,21 +101,22 @@ class DataController {
 
     try {
       await global.pg.query(
-        `DELETE FROM area
+          `DELETE FROM area
         WHERE hash = $1`,
           [hash]);
 
       res.status(200).json(
-          {status: true, message: 'Success', code: 200, data: {}});
+          {status: true, message: 'Success', code: 200, data: {}})
     } catch (error: any) {
-      logger.error(`Unexpected error in delete data: ${error}`)
+      if (process.env.LOGGER)
+        logger.error(`Unexpected error in delete data: ${error}`)
 
-      return res.status(500).json({
-        status: false,
-        message: 'Unexpected error in get data',
-        data: {},
-        code: 500
-      });
+        return res.status(500).json({
+          status: false,
+          message: 'Unexpected error in get data',
+          data: {},
+          code: 500
+        })
     }
   }
 }

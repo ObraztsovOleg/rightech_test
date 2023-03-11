@@ -31,3 +31,24 @@ services:
         limits:
           cpus: '4'
           memory: 70G
+  server:
+    build:
+      context: ./gistApp/
+      dockerfile: Dockerfile
+      args:
+        PRODUCTION: 0
+    image: obrol/rightech_test:v1
+    restart: always
+    environment:
+      - "POSTGRES_PASSWORD=fsdewc32sdca32"
+      - "POSTGRES_USER=root"
+      - "POSTGRES_DB=rightech"
+      - "POSTGRES_PORT=5432"
+      - "APP_PORT=4321"
+      - "LOGGER=0"
+    ports:
+      - 4321:4321
+    links:
+      - pgsql
+    depends_on:
+      - pgsql

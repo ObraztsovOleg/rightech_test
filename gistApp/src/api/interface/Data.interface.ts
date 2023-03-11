@@ -1,16 +1,13 @@
 interface Position {
-    pos: {
-        x: number,
-        y: number
-    }
+  pos: {x: number, y: number}
 }
 
 interface HashType {
-    hash: string
+  hash: string
 }
 
 interface GetDataType {
-    is_in_poly: boolean
+  is_in_poly: boolean
 }
 
 export {Position, GetDataType, HashType}

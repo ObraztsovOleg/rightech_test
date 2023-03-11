@@ -1,16 +1,16 @@
 import bodyParser from 'body-parser'
-import config from 'config'
+import { config } from '../config/config'
 import express, {Express, NextFunction, Request, Response, Router} from 'express'
 
+import Api from './api/api'
 import CORS from './CORS'
 import {logger} from './Logger'
-import Api from './api/api'
 import pool from './model/pgbase'
 
 pool()
 
 const app: Express = express()
-const HTTP_PORT: number = config.get('head.app_http_port') || 4321
+const HTTP_PORT: number = config.head.app_http_port as unknown as number || 4321
 const router: Router = Router();
 
 app.use(
@@ -21,8 +21,9 @@ app.use(
     .use('/', Api(router))
 
 try {
-  app.listen(
-      HTTP_PORT, () => {logger.info(`Server is running on ${HTTP_PORT}`)})
-} catch (e) {
-  logger.error('Server port is busy')
+  app.listen(HTTP_PORT, () => {
+    if (process.env.LOGGER) logger.info(`Server is running on ${HTTP_PORT}`)
+  })
+} catch (error: any) {
+  if (process.env.LOGGER) logger.error('Server port is busy')
 }

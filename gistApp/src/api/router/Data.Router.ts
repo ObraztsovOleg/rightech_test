@@ -8,8 +8,7 @@ export default (router: Router) => {
       .post('/data', validatePolygon, controller.addData)
       .delete('/data/:hash', validateHash, controller.deleteData)
       .patch(
-          '/data/:hash', validateHash, validatePolygon,
-          controller.updateData)
+          '/data/:hash', validateHash, validatePolygon, controller.updateData)
 
   return router
 }
