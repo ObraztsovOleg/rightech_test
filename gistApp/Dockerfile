@@ -6,8 +6,8 @@ ENV PRODUCTION $PRODUCTION
 WORKDIR /usr/app
 COPY ./ /usr/app
 
-RUN if ["$PRODUCTION" = "1"]; \
-        then npm ci && npm run build && chmod +x ./run.ch; \
+RUN if [ "$PRODUCTION" = "1" ]; \
+        then npm ci && npm run build && chmod +x ./run.sh; \
         else npm ci && npm install -g ts-node && chmod +x ./run.sh; \
     fi
 USER node
