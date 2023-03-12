@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser'
-import { config } from '../config/config'
 import express, {Express, NextFunction, Request, Response, Router} from 'express'
+
+import {config} from '../config/config'
 
 import Api from './api/api'
 import CORS from './CORS'
@@ -22,8 +23,9 @@ app.use(
 
 try {
   app.listen(HTTP_PORT, () => {
-    if (process.env.LOGGER) logger.info(`Server is running on ${HTTP_PORT}`)
+    if (process.env.LOGGER == '1')
+      logger.info(`Server is running on ${HTTP_PORT}`)
   })
 } catch (error: any) {
-  if (process.env.LOGGER) logger.error('Server port is busy')
+  if (process.env.LOGGER == '1') logger.error('Server port is busy')
 }

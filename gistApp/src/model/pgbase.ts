@@ -1,6 +1,6 @@
-import { config } from '../../config/config'
 import pg from 'pg'
 
+import {config} from '../../config/config'
 import {logger} from '../Logger'
 
 const {Pool} = pg;
@@ -24,19 +24,19 @@ export default (callback: any = null) => {
           (client: any) => {
               return client.query(...args)
                   .then((res: any) => {
-                    if (process.env.LOGGER)
+                    if (process.env.LOGGER == '1')
                       logger.info(`pool processes: total - ${pool.totalCount}, \
                                 idle - ${pool.idleCount}, \
                                 waiting - ${pool.waitingCount}`)
                       return res.rows
                   })
                   .catch((err: any) => {
-                    if (process.env.LOGGER)
+                    if (process.env.LOGGER == '1')
                       logger.error(`Database error - ${err}`)
                       client.release()
                   })
                   .finally(() => {
-                    if (process.env.LOGGER)
+                    if (process.env.LOGGER == '1')
                       logger.info(`Database connection closed`)
                       client.release()
                   })})

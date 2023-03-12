@@ -21,7 +21,7 @@ class DataController {
         data: {'is_in_poly': rows[0].is_in_poly}
       });
     } catch (error: any) {
-      if (process.env.LOGGER)
+      if (process.env.LOGGER == '1')
         logger.error(`Unexpected error in get data: ${error}`)
 
         return res.status(500).json({
@@ -52,7 +52,7 @@ class DataController {
       return res.status(200).json(
           {status: true, message: 'Success', code: 200, data: {}})
     } catch (error: any) {
-      if (process.env.LOGGER)
+      if (process.env.LOGGER == '1')
         logger.error(`Unexpected error in update data: ${error}`)
 
         return res.status(500).json({
@@ -71,8 +71,7 @@ class DataController {
 
     try {
       const rows: HashType[] = await global.pg.query(
-          `
-        INSERT INTO area (name, color, poly)
+          `INSERT INTO area (name, color, poly)
         VALUES($1, $2, $3)
         RETURNING hash`,
           [name, color, poly]);
@@ -84,7 +83,7 @@ class DataController {
         data: {hash: rows[0]?.hash}
       });
     } catch (error: any) {
-      if (process.env.LOGGER)
+      if (process.env.LOGGER == '1')
         logger.error(`Unexpected error in add data: ${error}`)
 
         return res.status(500).json({
@@ -108,7 +107,7 @@ class DataController {
       res.status(200).json(
           {status: true, message: 'Success', code: 200, data: {}})
     } catch (error: any) {
-      if (process.env.LOGGER)
+      if (process.env.LOGGER == '1')
         logger.error(`Unexpected error in delete data: ${error}`)
 
         return res.status(500).json({

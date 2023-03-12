@@ -36,7 +36,7 @@ services:
       context: ./gistApp/
       dockerfile: Dockerfile
       args:
-        PRODUCTION: 0
+        PRODUCTION: 1
     image: obrol/rightech_test:v1
     restart: always
     environment:
